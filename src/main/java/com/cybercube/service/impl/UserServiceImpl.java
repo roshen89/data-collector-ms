@@ -18,12 +18,12 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
   @Value("${calculation.seed}")
-  private int calculationSeed;
+  private Integer calculationSeed;
 
   @Value("${kafka.topic}")
   private String topic;
 
-  private final KafkaTemplate<String, Object> kafkaTemplate;
+  private final KafkaTemplate<Integer, Object> kafkaTemplate;
   private final ObjectMapper objectMapper;
 
   @Override
@@ -34,9 +34,9 @@ public class UserServiceImpl implements UserService {
       return ResponseEntity.badRequest().build();
     } else {
       String userMessage = objectMapper.writeValueAsString(userDTO);
-      kafkaTemplate.send(topic, userMessage);
-      log.info("Message sent. Message: " + userMessage);
-      return ResponseEntity.ok().body(userDTO);
+      kafkaTemplate.send(topic, calculationSeed, userMessage);
+      log.info("User sent. user: " + userMessage);
+      return ResponseEntity.ok().build();
     }
   }
 }

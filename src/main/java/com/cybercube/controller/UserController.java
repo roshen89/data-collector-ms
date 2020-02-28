@@ -21,8 +21,8 @@ public class UserController {
 
   private final UserServiceImpl userServiceImpl;
 
-  @PostMapping(path = "collect")
-  public ResponseEntity<UserDTO> collectData(@RequestBody UserDTO userDTO) throws JsonProcessingException {
+  @PostMapping(path = "send")
+  public ResponseEntity<UserDTO> sendUser(@RequestBody UserDTO userDTO) throws JsonProcessingException {
     return userServiceImpl.sendMessage(userDTO);
   }
 }
